@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:newzify/features/home/bloc/home_bloc.dart';
+import 'package:newzify/features/home/ui/widgets/error_widget.dart';
+import 'package:newzify/features/home/ui/widgets/news_list.dart';
 import 'package:newzify/features/home/ui/widgets/query_widget.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -9,6 +13,13 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  final homeBloc = HomeBloc();
+  @override
+  void initState() {
+    homeBloc.add(HomeInitialEvent());
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,9 +31,29 @@ class _HomeScreenState extends State<HomeScreen> {
           style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
         ),
       ),
-      body: const Column(
+      body: Column(
         children: [
-          QueryWidget(),
+          const QueryWidget(),
+          BlocBuilder<HomeBloc, HomeState>(
+            bloc: homeBloc,
+            builder: (context, state) {
+              if (state is HomeLoadingState) {
+                return const Center(
+                  child: Column(
+                    children: [
+                      SizedBox(height: 50),
+                      CircularProgressIndicator(),
+                    ],
+                  ),
+                );
+              }
+              if (state is HomeSuccessState) {
+                return NewsList(articles: state.articles);
+              } else {
+                return const ErrorResponseWidget();
+              }
+            },
+          ),
         ],
       ),
     );

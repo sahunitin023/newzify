@@ -10,7 +10,7 @@ class QueryWidget extends StatefulWidget {
 }
 
 class _QueryWidgetState extends State<QueryWidget> {
-  RequestQuery requestQuery = RequestQuery("in", "business", "");
+  RequestQuery requestQuery = RequestQuery("in", "general", "");
   String categoryHintText = "Category";
   String countryHintText = "Country";
 
@@ -56,10 +56,11 @@ class _QueryWidgetState extends State<QueryWidget> {
                       overflow: TextOverflow.ellipsis,
                       maxLines: 1,
                     ),
-                    items: NewsTexts.countryList().map((String value) {
+                    items:
+                        NewsTexts.countryList().keys.map((String countryName) {
                       return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(value),
+                        value: countryName,
+                        child: Text(countryName),
                       );
                     }).toList(),
                     onChanged: (String? newValue) {
@@ -68,12 +69,13 @@ class _QueryWidgetState extends State<QueryWidget> {
                             newValue ?? 'Country'; // Update hint text
                       });
                       requestQuery.country =
-                          newValue ?? NewsTexts.countryList()[51];
+                          (NewsTexts.countryList()[newValue] ??
+                              NewsTexts.countryList()['India'])!;
                     },
                   ),
                 ),
               ),
-              const SizedBox(width: 10.0), // Spacer between Dropdowns
+              const SizedBox(width: 10.0),
               Expanded(
                 child: Container(
                   decoration: BoxDecoration(
@@ -95,13 +97,17 @@ class _QueryWidgetState extends State<QueryWidget> {
                     items: NewsTexts.categoryList().map((String value) {
                       return DropdownMenuItem<String>(
                         value: value,
-                        child: Text(value),
+                        child: Text(
+                          value.substring(0, 1).toUpperCase() +
+                              value.substring(1),
+                        ),
                       );
                     }).toList(),
                     onChanged: (String? newValue) {
                       setState(() {
                         categoryHintText =
-                            newValue ?? 'Category'; // Update hint text
+                            newValue!.substring(0, 1).toUpperCase() +
+                                newValue.substring(1); // Update hint text
                       });
                       requestQuery.category =
                           newValue ?? NewsTexts.categoryList()[0];
