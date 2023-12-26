@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:newzify/features/home/bloc/home_bloc.dart';
-import 'package:newzify/features/home/models/request_query.dart';
+import 'package:newzify/models/request_query.dart';
 import 'package:newzify/utility/news_texts.dart';
 
 class QueryWidget extends StatefulWidget {

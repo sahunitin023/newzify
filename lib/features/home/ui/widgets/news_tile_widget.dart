@@ -1,7 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_cache_manager/flutter_cache_manager.dart';
-import 'package:newzify/features/home/models/article_model.dart';
+import 'package:newzify/models/article_model.dart';
 import 'package:newzify/utility/shimmer_widget.dart';
 
 class NewsTileWidget extends StatelessWidget {
@@ -27,7 +26,6 @@ class NewsTileWidget extends StatelessWidget {
                   height: 100,
                   fadeOutDuration: const Duration(seconds: 1),
                   fadeInDuration: const Duration(seconds: 2),
-                  cacheManager: DefaultCacheManager(),
                 )
               : Image.asset(
                   'assets/icons/placeholderjpeg.jpg',

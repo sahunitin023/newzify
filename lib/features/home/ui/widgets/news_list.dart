@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:newzify/features/home/models/article_model.dart';
+import 'package:newzify/models/article_model.dart';
 import 'package:newzify/features/home/ui/widgets/data_unavailable_widget.dart';
-import 'news_item.dart';
+import 'news_tile_widget.dart';
 
 class NewsList extends StatelessWidget {
   final List<ArticleModel> articles;

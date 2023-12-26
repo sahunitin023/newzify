@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-import 'package:newzify/features/home/models/article_model.dart';
-import 'package:newzify/features/home/models/request_query.dart';
+import 'package:newzify/models/article_model.dart';
+import 'package:newzify/models/request_query.dart';
 import 'package:newzify/services/crud_api.dart';
 import 'package:newzify/utility/constants.dart';
 
