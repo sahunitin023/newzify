@@ -10,7 +10,7 @@ class ErrorResponseWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Expanded(
       child: Padding(
-        padding: const EdgeInsets.fromLTRB(24, 0, 24, 0),
+        padding: const EdgeInsets.fromLTRB(24, 50, 24, 0),
         child: ListView(
           children: <Widget>[
             SvgPicture.asset(

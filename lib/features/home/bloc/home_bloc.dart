@@ -9,11 +9,31 @@ part 'home_state.dart';
 
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
   HomeBloc() : super(HomeInitial()) {
+    //On App Start:
     on<HomeInitialEvent>((event, emit) async {
       emit(HomeLoadingState());
       try {
         List<ArticleModel> articles =
             await HomeRepo.getTopHeadlines(RequestQuery('in', 'general', ''));
+        emit(HomeSuccessState(articles: articles));
+      } catch (e) {
+        emit(HomeErrorState());
+      }
+    });
+
+    //After applying filter:
+    on<HomeApplySearchEvent>((event, emit) async {
+      emit(HomeLoadingState());
+      try {
+        List<ArticleModel> articles;
+        if (event.requestQuery.category.isEmpty &&
+            event.requestQuery.query.isEmpty &&
+            event.requestQuery.country.isEmpty) {
+          articles =
+              await HomeRepo.getTopHeadlines(RequestQuery('in', 'general', ''));
+        } else {
+          articles = await HomeRepo.getTopHeadlines(event.requestQuery);
+        }
         emit(HomeSuccessState(articles: articles));
       } catch (e) {
         emit(HomeErrorState());

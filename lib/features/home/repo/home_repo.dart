@@ -19,7 +19,7 @@ class HomeRepo {
           articleModelListFromJson(jsonEncode(response));
       return listOfPosts;
     } else {
-      return [];
+      throw Exception();
     }
   }
 }

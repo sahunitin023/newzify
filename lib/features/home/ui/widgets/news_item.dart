@@ -16,37 +16,33 @@ class NewsTileWidget extends StatelessWidget {
       child: ListTile(
         leading: ClipRRect(
           borderRadius: BorderRadius.circular(10.0),
-          // Adjust the radius as needed
-          child: CachedNetworkImage(
-            cacheKey: articleModel.urlToImage,
-            imageUrl: articleModel.urlToImage ?? '',
-            placeholder: (_, __) => const ShimmerWidget(),
-            errorWidget: (_, __, error) => const ShimmerWidget(),
-            fit: BoxFit.cover,
-            width: 100,
-            height: 100,
-            fadeOutDuration: const Duration(seconds: 1),
-            fadeInDuration: const Duration(seconds: 2),
-            cacheManager: DefaultCacheManager(),
-          ),
+          child: articleModel.urlToImage != null
+              ? CachedNetworkImage(
+                  cacheKey: articleModel.urlToImage,
+                  imageUrl: articleModel.urlToImage ?? '',
+                  placeholder: (_, __) => const ShimmerWidget(),
+                  errorWidget: (_, __, error) => const ShimmerWidget(),
+                  fit: BoxFit.cover,
+                  width: 100,
+                  height: 100,
+                  fadeOutDuration: const Duration(seconds: 1),
+                  fadeInDuration: const Duration(seconds: 2),
+                  cacheManager: DefaultCacheManager(),
+                )
+              : Image.asset(
+                  'assets/icons/placeholderjpeg.jpg',
+                  fit: BoxFit.cover,
+                  width: 100,
+                  height: 100,
+                ),
         ),
         title: Text(
-          articleModel.title!,
+          articleModel.title ?? '',
           overflow: TextOverflow.ellipsis,
           maxLines: 3,
           style: const TextStyle(
             fontSize: 14,
             fontWeight: FontWeight.w500,
-          ),
-        ),
-        subtitle: Text(
-          articleModel.description!,
-          overflow: TextOverflow.fade,
-          maxLines: 1,
-          softWrap: false,
-          style: const TextStyle(
-            fontSize: 12,
-            fontWeight: FontWeight.w300,
           ),
         ),
       ),

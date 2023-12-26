@@ -33,18 +33,16 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       body: Column(
         children: [
-          const QueryWidget(),
+          QueryWidget(
+            homeBloc: homeBloc,
+          ),
           BlocBuilder<HomeBloc, HomeState>(
             bloc: homeBloc,
             builder: (context, state) {
               if (state is HomeLoadingState) {
-                return const Center(
-                  child: Column(
-                    children: [
-                      SizedBox(height: 50),
-                      CircularProgressIndicator(),
-                    ],
-                  ),
+                return const Padding(
+                  padding: EdgeInsets.only(top: 50.0),
+                  child: CircularProgressIndicator(),
                 );
               }
               if (state is HomeSuccessState) {

@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:newzify/features/home/bloc/home_bloc.dart';
 import 'package:newzify/features/home/models/request_query.dart';
 import 'package:newzify/utility/news_texts.dart';
 
 class QueryWidget extends StatefulWidget {
-  const QueryWidget({super.key});
+  final HomeBloc homeBloc;
+  const QueryWidget({super.key, required this.homeBloc});
 
   @override
   State<QueryWidget> createState() => _QueryWidgetState();
 }
 
 class _QueryWidgetState extends State<QueryWidget> {
-  RequestQuery requestQuery = RequestQuery("in", "general", "");
+  RequestQuery requestQuery = RequestQuery("", "", "");
   String categoryHintText = "Category";
   String countryHintText = "Country";
 
@@ -69,8 +71,7 @@ class _QueryWidgetState extends State<QueryWidget> {
                             newValue ?? 'Country'; // Update hint text
                       });
                       requestQuery.country =
-                          (NewsTexts.countryList()[newValue] ??
-                              NewsTexts.countryList()['India'])!;
+                          NewsTexts.countryList()[newValue] ?? '';
                     },
                   ),
                 ),
@@ -109,8 +110,7 @@ class _QueryWidgetState extends State<QueryWidget> {
                             newValue!.substring(0, 1).toUpperCase() +
                                 newValue.substring(1); // Update hint text
                       });
-                      requestQuery.category =
-                          newValue ?? NewsTexts.categoryList()[0];
+                      requestQuery.category = newValue ?? '';
                     },
                   ),
                 ),
@@ -126,9 +126,11 @@ class _QueryWidgetState extends State<QueryWidget> {
                   borderRadius: BorderRadius.all(Radius.circular(10))),
               backgroundColor: Colors.green.shade100.withAlpha(100),
             ),
-            onPressed: () async {
+            onPressed: () {
               requestQuery.query = _controller.text;
-              // widget.homeCubit.getTopHeadlines(requestQuery: requestQuery);
+              FocusScope.of(context).unfocus();
+              widget.homeBloc
+                  .add(HomeApplySearchEvent(requestQuery: requestQuery));
             },
             child: Text(
               NewsTexts.get()['search'],
