@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:newzify/features/detail/detail.dart';
 import 'package:newzify/models/article_model.dart';
 import 'package:newzify/utility/shimmer_widget.dart';
 
@@ -11,7 +12,16 @@ class NewsTileWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {},
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => Detail(
+              articleModel: articleModel,
+            ),
+          ),
+        );
+      },
       child: ListTile(
         leading: ClipRRect(
           borderRadius: BorderRadius.circular(10.0),
